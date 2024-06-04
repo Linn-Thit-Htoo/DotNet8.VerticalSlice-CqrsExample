@@ -43,7 +43,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
         #endregion
 
-        #region MyRegion
+        #region AddMediatRService
 
         #endregion
         private static IServiceCollection AddMediatRService(this IServiceCollection services)
