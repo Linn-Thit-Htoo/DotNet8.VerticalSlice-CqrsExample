@@ -27,5 +27,6 @@ public static class ChangeModel
             BlogContent = requestModel.BlogContent!
         };
     }
+
     #endregion
 }
