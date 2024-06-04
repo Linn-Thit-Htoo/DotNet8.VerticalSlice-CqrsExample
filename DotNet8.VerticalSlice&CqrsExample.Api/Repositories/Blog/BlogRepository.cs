@@ -81,6 +81,9 @@ public class BlogRepository : IBlogRepository
 
     #endregion
 
+    #region MyRegion
+
+    #endregion
     public async Task<BlogModel> GetBlogByIdAsync(long id)
     {
         try
