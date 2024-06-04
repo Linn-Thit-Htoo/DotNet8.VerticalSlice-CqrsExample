@@ -19,6 +19,9 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
         #endregion
 
+        #region MyRegion
+
+        #endregion
         private static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped<IBlogRepository, BlogRepository>();
