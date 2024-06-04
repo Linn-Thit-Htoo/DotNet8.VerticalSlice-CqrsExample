@@ -6,6 +6,9 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 {
     public static class ModularService
     {
+        #region MyRegion
+
+        #endregion
         public static IServiceCollection AddServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
             services.AddRepositoryServices();
