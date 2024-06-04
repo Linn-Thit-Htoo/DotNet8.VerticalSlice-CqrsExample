@@ -5,7 +5,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Models;
 
 public static class ChangeModel
 {
-    #region MyRegion
+    #region Blog
 
     #endregion
     public static BlogModel Change(this TblBlog dataModel)
