@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>DotNet8.VerticalSlice_CqrsExample.Models</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet8.VerticalSlice&amp;CqrsExample.DbService\DotNet8.VerticalSlice&amp;CqrsExample.DbService.csproj" />
+  </ItemGroup>
+
+</Project>
