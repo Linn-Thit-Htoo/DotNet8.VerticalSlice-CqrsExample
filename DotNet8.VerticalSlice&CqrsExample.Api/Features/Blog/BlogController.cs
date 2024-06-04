@@ -7,101 +7,100 @@ using DotNet8.VerticalSlice_CqrsExample.Models.Setup.Blog;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog
+namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BlogController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BlogController : BaseController
+    private readonly IMediator _mediator;
+
+    public BlogController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public BlogController(IMediator mediator)
+    [HttpGet]
+    public async Task<IActionResult> GetBlogs()
+    {
+        try
         {
-            _mediator = mediator;
+            var query = new GetBlogListQuery();
+            var lst = await _mediator.Send(query);
+
+            return Content(lst);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetBlogs()
+        catch (Exception ex)
         {
-            try
-            {
-                var query = new GetBlogListQuery();
-                var lst = await _mediator.Send(query);
-
-                return Content(lst);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return InternalServerError(ex);
         }
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBlogById(long id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBlogById(long id)
+    {
+        try
         {
-            try
-            {
-                var query = new GetBlogByIdQuery() { BlogId = id };
-                var item = await _mediator.Send(query);
+            var query = new GetBlogByIdQuery() { BlogId = id };
+            var item = await _mediator.Send(query);
 
-                return Content(item);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return Content(item);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateBlog([FromBody] BlogRequestModel requestModel)
+        catch (Exception ex)
         {
-            try
-            {
-                var command = new CreateBlogCommand() { BlogRequestModel = requestModel };
-                int result = await _mediator.Send(command);
-
-                return result > 0 ? Created("Creating Successful.") : BadRequest("Creating Fail");
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return InternalServerError(ex);
         }
+    }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchBlog([FromBody] BlogRequestModel requestModel, long id)
+    [HttpPost]
+    public async Task<IActionResult> CreateBlog([FromBody] BlogRequestModel requestModel)
+    {
+        try
         {
-            try
-            {
-                var command = new UpdateBlogCommand()
-                {
-                    BlogRequestModel = requestModel,
-                    BlogId = id
-                };
-                int result = await _mediator.Send(command);
+            var command = new CreateBlogCommand() { BlogRequestModel = requestModel };
+            int result = await _mediator.Send(command);
 
-                return result > 0 ? Accepted("Updating Successful.") : BadRequest("Updating Fail.");
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result > 0 ? Created("Creating Successful.") : BadRequest("Creating Fail");
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBlog(long id)
+        catch (Exception ex)
         {
-            try
-            {
-                var command = new DeleteBlogCommand() { BlogId = id };
-                int result = await _mediator.Send(command);
+            return InternalServerError(ex);
+        }
+    }
 
-                return result > 0 ? Accepted("Deleting Successful.") : BadRequest("Deleting Fail.");
-            }
-            catch (Exception ex)
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchBlog([FromBody] BlogRequestModel requestModel, long id)
+    {
+        try
+        {
+            var command = new UpdateBlogCommand()
             {
-                return InternalServerError(ex);
-            }
+                BlogRequestModel = requestModel,
+                BlogId = id
+            };
+            int result = await _mediator.Send(command);
+
+            return result > 0 ? Accepted("Updating Successful.") : BadRequest("Updating Fail.");
+        }
+        catch (Exception ex)
+        {
+            return InternalServerError(ex);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBlog(long id)
+    {
+        try
+        {
+            var command = new DeleteBlogCommand() { BlogId = id };
+            int result = await _mediator.Send(command);
+
+            return result > 0 ? Accepted("Deleting Successful.") : BadRequest("Deleting Fail.");
+        }
+        catch (Exception ex)
+        {
+            return InternalServerError(ex);
         }
     }
 }
