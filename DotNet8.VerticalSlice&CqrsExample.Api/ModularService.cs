@@ -10,10 +10,11 @@ public static class ModularService
 
     public static IServiceCollection AddServices(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.AddRepositoryServices();
-        services.AddDbContextService(builder);
-        services.AddMediatRService();
-        services.AddJsonServices();
+        services.AddRepositoryServices()
+            .AddDbContextService(builder)
+            .AddMediatRService()
+            .AddJsonServices();
+
         return services;
     }
 
