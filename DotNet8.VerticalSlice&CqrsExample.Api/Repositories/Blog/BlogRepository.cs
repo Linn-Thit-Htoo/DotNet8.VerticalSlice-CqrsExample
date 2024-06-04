@@ -104,7 +104,6 @@ public class BlogRepository : IBlogRepository
 
     #region Update Blog Async
 
-    #endregion
     public async Task<int> UpdateBlogAsync(BlogRequestModel requestModel, long id)
     {
         try
@@ -137,4 +136,5 @@ public class BlogRepository : IBlogRepository
             throw new Exception(ex.Message);
         }
     }
+    #endregion
 }
