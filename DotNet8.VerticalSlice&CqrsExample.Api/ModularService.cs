@@ -19,7 +19,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
         #endregion
 
-        #region MyRegion
+        #region Add Repository Services
 
         #endregion
         private static IServiceCollection AddRepositoryServices(this IServiceCollection services)
