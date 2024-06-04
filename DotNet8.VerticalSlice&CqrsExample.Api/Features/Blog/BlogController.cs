@@ -1,14 +1,11 @@
 ﻿using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.CreateBlog;
 using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.DeleteBlog;
 using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.UpdateBlog;
-using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Queries;
 using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Queries.GetBlogById;
 using DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Queries.GetBlogList;
 using DotNet8.VerticalSlice_CqrsExample.Models.Setup.Blog;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog
 {
