@@ -60,7 +60,6 @@ public class BlogRepository : IBlogRepository
 
     #region Delete Blog Async
 
-    #endregion
     public async Task<int> DeleteBlogAsync(long id)
     {
         try
@@ -68,7 +67,7 @@ public class BlogRepository : IBlogRepository
             var item = await _appDbContext.TblBlogs
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.BlogId == id)
-                ?? throw new ("No data found.");
+                ?? throw new("No data found.");
 
             _appDbContext.TblBlogs.Remove(item);
 
@@ -79,6 +78,7 @@ public class BlogRepository : IBlogRepository
             throw new Exception(ex.Message);
         }
     }
+    #endregion
 
     public async Task<BlogModel> GetBlogByIdAsync(long id)
     {
