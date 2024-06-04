@@ -16,6 +16,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
             services.AddJsonServices();
             return services;
         }
+
         #endregion
 
         private static IServiceCollection AddRepositoryServices(this IServiceCollection services)
