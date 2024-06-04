@@ -40,6 +40,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
             return services;
         }
+
         #endregion
 
         private static IServiceCollection AddMediatRService(this IServiceCollection services)
