@@ -78,6 +78,7 @@ public class BlogRepository : IBlogRepository
             throw new Exception(ex.Message);
         }
     }
+
     #endregion
 
     public async Task<BlogModel> GetBlogByIdAsync(long id)
