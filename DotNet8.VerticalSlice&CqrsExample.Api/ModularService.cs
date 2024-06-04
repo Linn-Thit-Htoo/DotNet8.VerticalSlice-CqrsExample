@@ -64,6 +64,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
             return services;
         }
+
         #endregion
     }
 }
