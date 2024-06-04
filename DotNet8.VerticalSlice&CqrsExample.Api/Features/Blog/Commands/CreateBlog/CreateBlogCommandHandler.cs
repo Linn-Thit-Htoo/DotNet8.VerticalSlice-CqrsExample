@@ -1,5 +1,4 @@
 ﻿using DotNet8.VerticalSlice_CqrsExample.Api.Repositories.Blog;
-using DotNet8.VerticalSlice_CqrsExample.Models.Setup.Blog;
 using MediatR;
 
 namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.CreateBlog;
