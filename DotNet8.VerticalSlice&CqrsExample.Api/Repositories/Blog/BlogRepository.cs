@@ -102,6 +102,9 @@ public class BlogRepository : IBlogRepository
 
     #endregion
 
+    #region Update Blog Async
+
+    #endregion
     public async Task<int> UpdateBlogAsync(BlogRequestModel requestModel, long id)
     {
         try
