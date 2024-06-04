@@ -3,120 +3,119 @@ using DotNet8.VerticalSlice_CqrsExample.Models;
 using DotNet8.VerticalSlice_CqrsExample.Models.Setup.Blog;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNet8.VerticalSlice_CqrsExample.Api.Repositories.Blog
+namespace DotNet8.VerticalSlice_CqrsExample.Api.Repositories.Blog;
+
+public class BlogRepository : IBlogRepository
 {
-    public class BlogRepository : IBlogRepository
+    private readonly AppDbContext _appDbContext;
+
+    public BlogRepository(AppDbContext appDbContext)
     {
-        private readonly AppDbContext _appDbContext;
+        _appDbContext = appDbContext;
+    }
 
-        public BlogRepository(AppDbContext appDbContext)
+    public async Task<int> CreateBlogAsync(BlogRequestModel requestModel)
+    {
+        try
         {
-            _appDbContext = appDbContext;
+            await _appDbContext.TblBlogs.AddAsync(requestModel.Change());
+            return await _appDbContext.SaveChangesAsync();
         }
-
-        public async Task<int> CreateBlogAsync(BlogRequestModel requestModel)
+        catch (Exception ex)
         {
-            try
-            {
-                await _appDbContext.TblBlogs.AddAsync(requestModel.Change());
-                return await _appDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            throw new Exception(ex.Message);
         }
+    }
 
-        public async Task<int> DeleteBlogAsync(long id)
+    public async Task<int> DeleteBlogAsync(long id)
+    {
+        try
         {
-            try
-            {
-                var item = await _appDbContext.TblBlogs
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.BlogId == id)
-                    ?? throw new ("No data found.");
+            var item = await _appDbContext.TblBlogs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.BlogId == id)
+                ?? throw new ("No data found.");
 
-                _appDbContext.TblBlogs.Remove(item);
+            _appDbContext.TblBlogs.Remove(item);
 
-                return await _appDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _appDbContext.SaveChangesAsync();
         }
-
-        public async Task<BlogModel> GetBlogByIdAsync(long id)
+        catch (Exception ex)
         {
-            try
-            {
-                var item = await _appDbContext.TblBlogs
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.BlogId == id)
-                    ?? throw new Exception("No data found.");
-
-                return item.Change();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            throw new Exception(ex.Message);
         }
+    }
 
-        public async Task<BlogListResponseModel> GetBlogsAsync()
+    public async Task<BlogModel> GetBlogByIdAsync(long id)
+    {
+        try
         {
-            try
-            {
-                var dataLst = await _appDbContext.TblBlogs
-               .AsNoTracking()
-               .OrderByDescending(x => x.BlogId)
-               .ToListAsync();
+            var item = await _appDbContext.TblBlogs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.BlogId == id)
+                ?? throw new Exception("No data found.");
 
-                var lst = dataLst.Select(x => x.Change()).ToList();
-                BlogListResponseModel responseModel = new()
-                {
-                    DataLst = lst
-                };
-
-                return responseModel;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return item.Change();
         }
-
-        public async Task<int> UpdateBlogAsync(BlogRequestModel requestModel, long id)
+        catch (Exception ex)
         {
-            try
+            throw new Exception(ex.Message);
+        }
+    }
+
+    public async Task<BlogListResponseModel> GetBlogsAsync()
+    {
+        try
+        {
+            var dataLst = await _appDbContext.TblBlogs
+           .AsNoTracking()
+           .OrderByDescending(x => x.BlogId)
+           .ToListAsync();
+
+            var lst = dataLst.Select(x => x.Change()).ToList();
+            BlogListResponseModel responseModel = new()
             {
-                var item = await _appDbContext.TblBlogs
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.BlogId == id)
-                    ?? throw new Exception("Blog Id cannot be empty.");
+                DataLst = lst
+            };
 
-                if (!string.IsNullOrEmpty(requestModel.BlogTitle))
-                {
-                    item.BlogTitle = requestModel.BlogTitle;
-                }
+            return responseModel;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 
-                if (!string.IsNullOrEmpty(requestModel.BlogAuthor))
-                {
-                    item.BlogAuthor = requestModel.BlogAuthor;
-                }
+    public async Task<int> UpdateBlogAsync(BlogRequestModel requestModel, long id)
+    {
+        try
+        {
+            var item = await _appDbContext.TblBlogs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.BlogId == id)
+                ?? throw new Exception("Blog Id cannot be empty.");
 
-                if (!string.IsNullOrEmpty(requestModel.BlogContent))
-                {
-                    item.BlogContent = requestModel.BlogContent;
-                }
-                _appDbContext.Entry(item).State = EntityState.Modified;
-
-                return await _appDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(requestModel.BlogTitle))
             {
-                throw new Exception(ex.Message);
+                item.BlogTitle = requestModel.BlogTitle;
             }
+
+            if (!string.IsNullOrEmpty(requestModel.BlogAuthor))
+            {
+                item.BlogAuthor = requestModel.BlogAuthor;
+            }
+
+            if (!string.IsNullOrEmpty(requestModel.BlogContent))
+            {
+                item.BlogContent = requestModel.BlogContent;
+            }
+            _appDbContext.Entry(item).State = EntityState.Modified;
+
+            return await _appDbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
         }
     }
 }
