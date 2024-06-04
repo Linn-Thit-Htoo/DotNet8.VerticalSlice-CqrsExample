@@ -41,7 +41,7 @@ public class BlogRepository : IBlogRepository
 
     #endregion
 
-    #region MyRegion
+    #region CreateBlogAsync
 
     #endregion
     public async Task<int> CreateBlogAsync(BlogRequestModel requestModel)
