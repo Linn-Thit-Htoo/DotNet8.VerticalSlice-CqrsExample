@@ -29,6 +29,9 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
         #endregion
 
+        #region MyRegion
+
+        #endregion
         private static IServiceCollection AddDbContextService(this IServiceCollection services, WebApplicationBuilder builder)
         {
             builder.Services.AddDbContext<AppDbContext>(opt =>
