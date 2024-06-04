@@ -53,7 +53,7 @@ namespace DotNet8.VerticalSlice_CqrsExample.Api
 
         #endregion
 
-        #region MyRegion
+        #region Add Json Services
 
         #endregion
         private static IServiceCollection AddJsonServices(this IServiceCollection services)
