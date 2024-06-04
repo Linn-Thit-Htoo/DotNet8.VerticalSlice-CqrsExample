@@ -14,6 +14,32 @@ public class BlogRepository : IBlogRepository
         _appDbContext = appDbContext;
     }
 
+    #region Get Blogs Async
+
+    #endregion
+    public async Task<BlogListResponseModel> GetBlogsAsync()
+    {
+        try
+        {
+            var dataLst = await _appDbContext.TblBlogs
+           .AsNoTracking()
+           .OrderByDescending(x => x.BlogId)
+           .ToListAsync();
+
+            var lst = dataLst.Select(x => x.Change()).ToList();
+            BlogListResponseModel responseModel = new()
+            {
+                DataLst = lst
+            };
+
+            return responseModel;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
     public async Task<int> CreateBlogAsync(BlogRequestModel requestModel)
     {
         try
@@ -56,29 +82,6 @@ public class BlogRepository : IBlogRepository
                 ?? throw new Exception("No data found.");
 
             return item.Change();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-    public async Task<BlogListResponseModel> GetBlogsAsync()
-    {
-        try
-        {
-            var dataLst = await _appDbContext.TblBlogs
-           .AsNoTracking()
-           .OrderByDescending(x => x.BlogId)
-           .ToListAsync();
-
-            var lst = dataLst.Select(x => x.Change()).ToList();
-            BlogListResponseModel responseModel = new()
-            {
-                DataLst = lst
-            };
-
-            return responseModel;
         }
         catch (Exception ex)
         {
