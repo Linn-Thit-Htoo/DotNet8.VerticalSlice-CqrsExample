@@ -1,23 +1,22 @@
 ﻿using DotNet8.VerticalSlice_CqrsExample.Api.Repositories.Blog;
 using MediatR;
 
-namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.UpdateBlog
+namespace DotNet8.VerticalSlice_CqrsExample.Api.Features.Blog.Commands.UpdateBlog;
+
+public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, int>
 {
-    public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, int>
+    private readonly IBlogRepository _blogRepository;
+
+    public UpdateBlogCommandHandler(IBlogRepository blogRepository)
     {
-        private readonly IBlogRepository _blogRepository;
+        _blogRepository = blogRepository;
+    }
 
-        public UpdateBlogCommandHandler(IBlogRepository blogRepository)
-        {
-            _blogRepository = blogRepository;
-        }
+    public async Task<int> Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
+    {
+        if (request.BlogId <= 0)
+            throw new Exception("Blog Id cannot be empty.");
 
-        public async Task<int> Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
-        {
-            if (request.BlogId <= 0)
-                throw new Exception("Blog Id cannot be empty.");
-
-            return await _blogRepository.UpdateBlogAsync(request.BlogRequestModel, request.BlogId);
-        }
+        return await _blogRepository.UpdateBlogAsync(request.BlogRequestModel, request.BlogId);
     }
 }
