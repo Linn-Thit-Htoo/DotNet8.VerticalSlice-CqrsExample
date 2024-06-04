@@ -58,7 +58,7 @@ public class BlogRepository : IBlogRepository
 
     #endregion
 
-    #region MyRegion
+    #region Delete Blog Async
 
     #endregion
     public async Task<int> DeleteBlogAsync(long id)
