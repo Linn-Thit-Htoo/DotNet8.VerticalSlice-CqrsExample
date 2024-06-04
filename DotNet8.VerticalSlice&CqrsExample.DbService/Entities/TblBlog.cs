@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DotNet8.VerticalSlice_CqrsExample.DbService.Entities;
+﻿namespace DotNet8.VerticalSlice_CqrsExample.DbService.Entities;
 
 public partial class TblBlog
 {
